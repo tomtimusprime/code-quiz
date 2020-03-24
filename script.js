@@ -12,3 +12,7 @@ function quizTimer() {
         }
     }, 1000)
 }
+
+const questions = [
+    {question}
+]
