@@ -1,7 +1,27 @@
+const startButton = document.querySelector("#start");
+startButton.addEventListener("click", startGame)
+const questionContainerElement = document.querySelector("#question-container");
+const answer1btn = document.querySelector("#answer1");
+const answer2btn = document.querySelector("#answer2");
+const answer3btn = document.querySelector("#answer3");
+const answer4btn = document.querySelector("#answer4");
+
 let timerTextElement = document.querySelector("#timer-text");
 let timerCount = 75;
 timerTextElement.textContent = `Time Remaining: ${timerCount}`;
 quizTimer();
+
+function startGame() {
+  console.log("game started");
+  startButton.classList.add("hide");
+  questionContainerElement.classList.remove("hide");
+  answer1btn.classList.remove("hide");
+  answer2btn.classList.remove("hide");
+  answer3btn.classList.remove("hide");
+  answer4btn.classList.remove("hide");
+
+}
+
 
 function quizTimer() {
     let timerId = setInterval(function() {
@@ -63,3 +83,13 @@ const questions = [
         correctAnswer: "b",
     }
   ];
+
+  
+
+  function setNextQuestion() {
+
+  }
+
+  function selectAnswer() {
+
+  }

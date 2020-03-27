@@ -32,19 +32,21 @@
     <!-- The quiz Card section -->
 
     <div class="container">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+        <div class="card"  style="width: 21.5em;margin:0 auto;">
+            <div class="card-body" >
+                <h5 class="card-title">Javascrip Quiz</h5>
+                <p class="card-text hide" id="question-container">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
                 <div class="row">
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-primary button-padding">Answer 1</a>
-                        <a href="#" class="btn btn-primary button-padding">Answer 2</a>
+                        <a id="answer1"href="#" class="btn btn-primary button-padding hide">Answer 1</a>
+                        <a id="answer2"href="#" class="btn btn-primary button-padding hide">Answer 2</a>
+                        <a id="start" href="#" class="btn btn-primary button-padding">Start Game</a>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-primary button-padding">Answer 3</a>
-                        <a href="#" class="btn btn-primary button-padding">Answer 4</a>
+                        <a id="answer3" href="#" class="btn btn-primary button-padding hide">Answer 3</a>
+                        <a id="answer4" href="#" class="btn btn-primary button-padding hide">Answer 4</a>
+                        <a id="next" href="#" class="btn btn-primary button-padding hide">Next</a>
                     </div>
                 </div>
             </div>
@@ -52,7 +54,7 @@
     </div>
 
 
-    <div class="container">
+    <!-- <div class="container">
         <div id="question-container" class="hide">
             <div id="question">Question</div>
             <div id="answer-buttons" class="btn-grid">
@@ -66,7 +68,7 @@
             <button id="start-btn" class="start-btn btn">Start</button>
             <button id="next-button" class="next-btn btn hide">Next</button>
         </div>
-    </div>
+    </div> -->
 
 
     <script src="script.js"></script>
