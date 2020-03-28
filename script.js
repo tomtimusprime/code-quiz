@@ -1,5 +1,5 @@
 //================================
-//Declaring the questions variable
+//Declaring the questions Array
 //================================
 
 const questions = [
@@ -64,7 +64,7 @@ let shuffledQuestions;
 let currentQuestionIndex;
 
 let timerTextElement = document.querySelector("#timer-text");
-let timerCount = 75;
+let timerCount = 10;
 let timer;
 timerTextElement.textContent = `Time Remaining: ${timerCount}`;
 
@@ -92,14 +92,17 @@ function setNextQuestion() {
   showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
-
+//=========================
 //Next Button functionality
+//=========================
 nextBtn.addEventListener("click", function() {
   currentQuestionIndex++;
   setNextQuestion();
 });
 
+//========================
 //Quiz Timer Functionality
+//========================
 function quizTimer() {
   let timerId = setInterval(function() {
     timerCount--;  
@@ -109,13 +112,29 @@ function quizTimer() {
           startButton.classList.add("hide");
           nextBtn.classList.add("hide");
           answerButtonsElement.classList.add("hide");
-          questionContainerElement.textContent = "Game Over. You've run out of time!"
+          //questionContainerElement.textContent = "Game Over. You've run out of time!";
+          inputInitials();
       }
   }, 1000);
-  let timerObject = {stop: function(){clearTimeout(timerId);}};
+  //Created a timer object to be assigned to the variable up above so I could manipulate the timer from outside the setInterval 
+  //function. This also handles the penalty when you get an answer wrong.
+  let timerObject = {
+    stop: function(){clearTimeout(timerId);},
+    penalty: function() {
+      if(timerCount <= 5) {
+        timerCount = 1;
+      }
+      else {
+        timerCount -=5;
+      }
+    }
+  };
   return timerObject;
 }
 
+//==================================================
+//Generate the questions and buttons to be displayed
+//==================================================
 function showQuestion(question) {
   questionElement.innerText = question.question;
     question.answers.forEach(answer => {
@@ -130,6 +149,9 @@ function showQuestion(question) {
   })
 }
 
+//=============================================
+//resets the answerButtonsElement using the DOM
+//=============================================
 function resetQuestions () {
   nextBtn.classList.add("hide");
   while(answerButtonsElement.firstChild) {
@@ -137,28 +159,31 @@ function resetQuestions () {
   }
 }
 
+//=======================================================================================================================
+//generates the new buttons associated with the question and answer objects within the questions array and displays them.
+//=======================================================================================================================
 function selectAnswer(e) {
   const selectedButton = e.target;
   const correct = selectedButton.dataset.correct;
-  setStatusClass(document.body, correct);
+  setStatusClass(document.body, correct);//selects the body element and sets it to the ".correct" css class
   Array.from(answerButtonsElement.children).forEach(button => {
     setStatusClass(button, button.dataset.correct);
   });
   if(!correct) {
-    timerCount -=5;
+    timer.penalty();
   }
-  console.log(shuffledQuestions.length);
-  console.log(currentQuestionIndex);
   if(shuffledQuestions.length > currentQuestionIndex + 1) {
     nextBtn.classList.remove("hide");
   } 
   else {
-    // startButton.innerText = "Restart Quiz"
-    // startButton.classList.remove("hide");
     inputInitials();
   }
   
 }
+
+//================================================================================================================
+//Code to the change the background and button color according to whether the user gets the answer correct or not.
+//================================================================================================================
 
 function setStatusClass(element, correct) {
   clearStatusClass(element);
@@ -175,26 +200,32 @@ function clearStatusClass(element) {
   element.classList.remove("wrong");
 }
 
-
-
+//This code handles when the quiz is over. It creates a form to input your initials and saves them to local storage to be displayed
+//on the High Scores html page.
 function inputInitials() {
   timer.stop();
   let highscore = timerCount;
-  console.log(highscore);
   answerButtonsElement.classList.add("hide");
-  questionElement.innerText = "Enter your initials to add yourself to the high scores list!"
+  questionElement.innerText = `The game is over! Enter your initials to add yourself to the high scores list! Your score is ${highscore}.`;
   let submitButton = document.createElement("button");
   submitButton.innerText = "Submit";
   submitButton.setAttribute("class", "btn btn-primary button-effects");
   let formSubmission = document.createElement("input");
   formSubmission.setAttribute("type", "text");
-  formSubmission.setAttribute("label", "Initials");
   questionContainerElement.appendChild(formSubmission);
   questionContainerElement.appendChild(submitButton);
+  // submitButton.addEventListener("click", function(e) {
+  //   let initials = localStorage.getItem("initials");
+  //   if(initials === null) {
+  //     initials = [];
+  //   } else {
+  //     initials = JSON.parse("initials");
+  //   }
+    
+
+  // })
 }
 
-//Why is getting it wrong and right causing it reduce by 5 when I set it to 1?
-//WHy is the timer going into the negatives?
 //Once the game is over how can I stop the clock?
 //Once the game is over how can I trigger a field to input your name?
 //Once the game is over how can I save to local storage the name and score you put in?
