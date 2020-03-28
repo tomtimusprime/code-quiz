@@ -15,6 +15,9 @@ body.correct {
 body.wrong {
     background-color: #C82333;
 }
+body.highscores {
+    background-color: black;
+}
 
 /* .container {
     padding: 0;

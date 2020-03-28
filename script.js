@@ -119,8 +119,9 @@ function selectAnswer(e) {
     nextBtn.classList.remove("hide");
   } 
   else {
-    startButton.innerText = "Restart Quiz"
-    startButton.classList.remove("hide");
+    // startButton.innerText = "Restart Quiz"
+    // startButton.classList.remove("hide");
+    inputInitials();
   }
   
 }
@@ -153,6 +154,15 @@ function quizTimer() {
             questionContainerElement.textContent = "Game Over. You've run out of time!"
         }
     }, 1000)
+}
+
+function inputInitials() {
+  let submitButton = createElement("button");
+  let formSubmission = createElement("input");
+  formSubmission.setAttribute("type", "text");
+  formSubmission.setAttribute("label", "Initials");
+  questionContainerElement.appendChild(formSubmission);
+  questionContainerElement.appendChild(submitButton);
 }
 
 //Why is getting it wrong and right causing it reduce by 5 when I set it to 1?
