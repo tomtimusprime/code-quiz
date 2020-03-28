@@ -1,3 +1,7 @@
+//================================
+//Declaring the questions variable
+//================================
+
 const questions = [
   {
     question: "Who invented JavaScript?",
@@ -47,8 +51,10 @@ const questions = [
 ];
 
 
+//=========================
+//Declare the DOM variables
+//=========================
 const startButton = document.querySelector("#start");
-startButton.addEventListener("click", startGame)
 const questionContainerElement = document.querySelector("#question-container");
 const nextBtn = document.querySelector("#next");
 const questionElement = document.querySelector("#question-element");
@@ -59,16 +65,16 @@ let currentQuestionIndex;
 
 let timerTextElement = document.querySelector("#timer-text");
 let timerCount = 75;
+let timer;
 timerTextElement.textContent = `Time Remaining: ${timerCount}`;
 
-nextBtn.addEventListener("click", function() {
-  currentQuestionIndex++;
-  setNextQuestion();
-});
-
+//==========================
+//Start Button functionality
+//==========================
+startButton.addEventListener("click", startGame)
 
 function startGame() {
-  quizTimer();
+  timer = quizTimer();
   console.log("game started");
   startButton.classList.add("hide");
   questionContainerElement.classList.remove("hide");
@@ -81,10 +87,33 @@ function startGame() {
   currentQuestionIndex = 0; 
   setNextQuestion();
 }
-
 function setNextQuestion() {
   resetQuestions();
   showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
+
+
+//Next Button functionality
+nextBtn.addEventListener("click", function() {
+  currentQuestionIndex++;
+  setNextQuestion();
+});
+
+//Quiz Timer Functionality
+function quizTimer() {
+  let timerId = setInterval(function() {
+    timerCount--;  
+    timerTextElement.textContent = `Time Remaining: ${timerCount}`;
+      if(timerCount === 0) {
+          clearTimeout(timerId);
+          startButton.classList.add("hide");
+          nextBtn.classList.add("hide");
+          answerButtonsElement.classList.add("hide");
+          questionContainerElement.textContent = "Game Over. You've run out of time!"
+      }
+  }, 1000);
+  let timerObject = {stop: function(){clearTimeout(timerId);}};
+  return timerObject;
 }
 
 function showQuestion(question) {
@@ -113,8 +142,13 @@ function selectAnswer(e) {
   const correct = selectedButton.dataset.correct;
   setStatusClass(document.body, correct);
   Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
+    setStatusClass(button, button.dataset.correct);
   });
+  if(!correct) {
+    timerCount -=5;
+  }
+  console.log(shuffledQuestions.length);
+  console.log(currentQuestionIndex);
   if(shuffledQuestions.length > currentQuestionIndex + 1) {
     nextBtn.classList.remove("hide");
   } 
@@ -133,7 +167,6 @@ function setStatusClass(element, correct) {
   }
   else {
     element.classList.add("wrong");
-    timerCount -= 1;
   }
 }
 
@@ -142,23 +175,18 @@ function clearStatusClass(element) {
   element.classList.remove("wrong");
 }
 
-function quizTimer() {
-    let timerId = setInterval(function() {
-        timerCount--;
-        timerTextElement.textContent = `Time Remaining: ${timerCount}`;
-        if(timerCount === 0) {
-            clearTimeout(timerId);
-            startButton.classList.add("hide");
-            nextBtn.classList.add("hide");
-            answerButtonsElement.classList.add("hide");
-            questionContainerElement.textContent = "Game Over. You've run out of time!"
-        }
-    }, 1000)
-}
+
 
 function inputInitials() {
-  let submitButton = createElement("button");
-  let formSubmission = createElement("input");
+  timer.stop();
+  let highscore = timerCount;
+  console.log(highscore);
+  answerButtonsElement.classList.add("hide");
+  questionElement.innerText = "Enter your initials to add yourself to the high scores list!"
+  let submitButton = document.createElement("button");
+  submitButton.innerText = "Submit";
+  submitButton.setAttribute("class", "btn btn-primary button-effects");
+  let formSubmission = document.createElement("input");
   formSubmission.setAttribute("type", "text");
   formSubmission.setAttribute("label", "Initials");
   questionContainerElement.appendChild(formSubmission);
@@ -170,3 +198,5 @@ function inputInitials() {
 //Once the game is over how can I stop the clock?
 //Once the game is over how can I trigger a field to input your name?
 //Once the game is over how can I save to local storage the name and score you put in?
+
+//
