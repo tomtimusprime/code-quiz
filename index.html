@@ -33,26 +33,40 @@
 
     <div class="container">
         <div class="card"  style="width: 21.5em;margin:0 auto;">
-            <div class="card-body" >
-                <h5 class="card-title">Javascrip Quiz</h5>
-                <p class="card-text hide" id="question-container">Some quick example text to build on the card title and make up the bulk of the
+            <div class="card-body" id="question-container">
+                <h5 class="card-title">Javascript Quiz</h5>
+                <p class="card-text hide" id="question-element">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a id="answer1"href="#" class="btn btn-primary button-padding hide">Answer 1</a>
-                        <a id="answer2"href="#" class="btn btn-primary button-padding hide">Answer 2</a>
-                        <a id="start" href="#" class="btn btn-primary button-padding">Start Game</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a id="answer3" href="#" class="btn btn-primary button-padding hide">Answer 3</a>
-                        <a id="answer4" href="#" class="btn btn-primary button-padding hide">Answer 4</a>
-                        <a id="next" href="#" class="btn btn-primary button-padding hide">Next</a>
-                    </div>
+                <div id="answer-buttons" class="btn-grid hide">
+                    <!-- <button class="btn btn-primary button-effects">Answer 1</button> 
+                    <button class="btn btn-primary button-effects">Answer 1</button> 
+                    <button class="btn btn-primary button-effects">Answer 1</button> 
+                    <button class="btn btn-primary button-effects">Answer 1</button> -->
+                </div>
+                <div class="controls">
+                    <button id="start" class="btn btn-primary button-effects">Start</button> 
+                    <button id="next" class="btn btn-primary button-effects hide">Next</button> 
                 </div>
             </div>
         </div>
     </div>
 
+
+
+    <!-- <div class="row" id="#button-container">
+        <div class="col-sm-6" id="column1">
+            <a id="answer1"href="#" class="btn btn-primary button-effects hide">Answer 1</a>
+            <a id="answer2"href="#" class="btn btn-primary button-effects hide">Answer 2</a>
+        </div>
+        <div class="col-sm-6" id="column2">
+            <a id="answer3" href="#" class="btn btn-primary button-effects hide">Answer 3</a>
+            <a id="answer4" href="#" class="btn btn-primary button-effects hide">Answer 4</a>
+            <a id="next" href="#" class="btn btn-primary button-effects hide">Next</a>
+        </div>
+        <div class="text-center">
+            <a id="start" href="#" class="btn btn-primary button-effects">Start Game</a>
+        </div>
+    </div> -->
 
     <!-- <div class="container">
         <div id="question-container" class="hide">

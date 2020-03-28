@@ -29,12 +29,18 @@ body.wrong {
     box-shadow: 0 0 10px 2px;
 }
 
-.button-padding {
+.button-effects {
     padding: 10px;
     margin: 10px;
     
 }
-.button-padding:hover {
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px 0;
+}
+.button-effects:hover {
     border: solid black 1px;
 }
 .btn.correct {
@@ -52,4 +58,5 @@ body.wrong {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
+    
 }
