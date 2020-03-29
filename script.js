@@ -112,7 +112,6 @@ function quizTimer() {
       startButton.classList.add("hide");
       nextBtn.classList.add("hide");
       answerButtonsElement.classList.add("hide");
-      //questionContainerElement.textContent = "Game Over. You've run out of time!";
       endGame();
     }
   }, 1000);
@@ -206,6 +205,7 @@ function clearStatusClass(element) {
 //=======================================================================================================================
 function endGame() {
   timer.stop();
+  document.body.setAttribute("style", "background-color:#5995ED");
   let highscore = timerCount;
   answerButtonsElement.classList.add("hide");
   questionElement.innerText = `The quiz is over! Enter your initials to add yourself to the high scores list! Your score is ${highscore}.`;
