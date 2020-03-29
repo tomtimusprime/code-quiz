@@ -6,47 +6,47 @@ const questions = [
   {
     question: "Who invented JavaScript?",
     answers: [
-      {text: "Douglas Crockford", correct: false},
-      {text: "Sheryl Sandberg", correct: false},
-      {text: "Brendan Eich", correct: true},
-      {text: "Bill Gates", correct: false}
+      { text: "Douglas Crockford", correct: false },
+      { text: "Sheryl Sandberg", correct: false },
+      { text: "Brendan Eich", correct: true },
+      { text: "Bill Gates", correct: false }
     ]
   },
   {
     question: "Which one of these is a JavaScript package manager?",
     answers: [
-      { text: "Node.js", correct: false},
-      { text: "TypeScript", correct: false},
-      { text: "npm", correct: true},
-      { text: "Java", correct: false}
+      { text: "Node.js", correct: false },
+      { text: "TypeScript", correct: false },
+      { text: "npm", correct: true },
+      { text: "Java", correct: false }
     ]
   },
   {
     question: "Which tool can you use to ensure code quality?",
     answers: [
-      {text: "Angular", correct: false},
-      {text: "jQuery", correct: false},
-      {text: "RequireJS", correct: false},
-      {text: "ESLint", correct: true}
+      { text: "Angular", correct: false },
+      { text: "jQuery", correct: false },
+      { text: "RequireJS", correct: false },
+      { text: "ESLint", correct: true }
     ]
   },
   {
-      question: "Which framework was made by facebook and is in high demand right now (March 2020)?",
-      answers: [
-          {text: "Angular", correct: false},
-          {text: "Vue", correct: false},
-          {text: "JQuery", correct: false},
-          {text: "React", correct: true}
-      ]
+    question: "Which framework was made by facebook and is in high demand right now (March 2020)?",
+    answers: [
+      { text: "Angular", correct: false },
+      { text: "Vue", correct: false },
+      { text: "JQuery", correct: false },
+      { text: "React", correct: true }
+    ]
   },
   {
-      question: "What is the latest version of javscript right now?",
-      answers: [
-          {text: "ES5", correct: false},
-          {text: "ES6", correct: true},
-          {text: "ES7", correct: false},
-          {text: "ES4", correct: false}
-      ]
+    question: "What is the latest version of javscript right now?",
+    answers: [
+      { text: "ES5", correct: false },
+      { text: "ES6", correct: true },
+      { text: "ES7", correct: false },
+      { text: "ES4", correct: false }
+    ]
   }
 ];
 
@@ -80,11 +80,11 @@ function startGame() {
   questionContainerElement.classList.remove("hide");
   questionElement.classList.remove("hide")
   nextBtn.classList.remove("hide");
-  answerButtonsElement.classList.remove("hide");  
-  shuffledQuestions = questions.sort(function() {
+  answerButtonsElement.classList.remove("hide");
+  shuffledQuestions = questions.sort(function () {
     return Math.random() - 0.5;
   })
-  currentQuestionIndex = 0; 
+  currentQuestionIndex = 0;
   setNextQuestion();
 }
 function setNextQuestion() {
@@ -95,7 +95,7 @@ function setNextQuestion() {
 //=========================
 //Next Button functionality
 //=========================
-nextBtn.addEventListener("click", function() {
+nextBtn.addEventListener("click", function () {
   currentQuestionIndex++;
   setNextQuestion();
 });
@@ -104,29 +104,29 @@ nextBtn.addEventListener("click", function() {
 //Quiz Timer Functionality
 //========================
 function quizTimer() {
-  let timerId = setInterval(function() {
-    timerCount--;  
+  let timerId = setInterval(function () {
+    timerCount--;
     timerTextElement.textContent = `Time Remaining: ${timerCount}`;
-      if(timerCount === 0) {
-          clearTimeout(timerId);
-          startButton.classList.add("hide");
-          nextBtn.classList.add("hide");
-          answerButtonsElement.classList.add("hide");
-          //questionContainerElement.textContent = "Game Over. You've run out of time!";
-          inputInitials();
-      }
+    if (timerCount === 0) {
+      clearTimeout(timerId);
+      startButton.classList.add("hide");
+      nextBtn.classList.add("hide");
+      answerButtonsElement.classList.add("hide");
+      //questionContainerElement.textContent = "Game Over. You've run out of time!";
+      endGame();
+    }
   }, 1000);
 
   //Created a timer object to be assigned to the variable up above so I could manipulate the timer from outside the setInterval 
   //function. This also handles the penalty when you get an answer wrong.
   let timerObject = {
-    stop: function(){clearTimeout(timerId);},
-    penalty: function() {
-      if(timerCount <= 5) {
+    stop: function () { clearTimeout(timerId); },
+    penalty: function () {
+      if (timerCount <= 5) {
         timerCount = 1;
       }
       else {
-        timerCount -=5;
+        timerCount -= 5;
       }
     }
   };
@@ -138,24 +138,24 @@ function quizTimer() {
 //==================================================
 function showQuestion(question) {
   questionElement.innerText = question.question;
-    question.answers.forEach(answer => {
+  question.answers.forEach(answer => {
     const button = document.createElement("button");
     button.innerText = answer.text;
     button.setAttribute("class", "btn btn-primary button-effects");
-    if(answer.correct) {
+    if (answer.correct) {
       button.dataset.correct = answer.correct;
     }
     button.addEventListener("click", selectAnswer);
-    answerButtonsElement.appendChild(button); 
+    answerButtonsElement.appendChild(button);
   })
 }
 
 //=============================================
 //resets the answerButtonsElement using the DOM
 //=============================================
-function resetQuestions () {
+function resetQuestions() {
   nextBtn.classList.add("hide");
-  while(answerButtonsElement.firstChild) {
+  while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
   }
 }
@@ -170,16 +170,16 @@ function selectAnswer(e) {
   Array.from(answerButtonsElement.children).forEach(button => {
     setStatusClass(button, button.dataset.correct);
   });
-  if(!correct) {
+  if (!correct) {
     timer.penalty();
   }
-  if(shuffledQuestions.length > currentQuestionIndex + 1) {
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextBtn.classList.remove("hide");
-  } 
-  else {
-    inputInitials();
   }
-  
+  else {
+    endGame();
+  }
+
 }
 
 //================================================================================================================
@@ -188,7 +188,7 @@ function selectAnswer(e) {
 
 function setStatusClass(element, correct) {
   clearStatusClass(element);
-  if(correct){
+  if (correct) {
     element.classList.add("correct");
   }
   else {
@@ -201,9 +201,10 @@ function clearStatusClass(element) {
   element.classList.remove("wrong");
 }
 
-//This code handles when the quiz is over. It creates a form to input your initials and saves them to local storage to be displayed
-//on the High Scores html page.
-function inputInitials() {
+//=======================================================================================================================
+//This code handles when the quiz is over. It creates a form to input your initials and saves them to local storage to be displayed on the High Scores html page.
+//=======================================================================================================================
+function endGame() {
   timer.stop();
   let highscore = timerCount;
   answerButtonsElement.classList.add("hide");
@@ -215,9 +216,10 @@ function inputInitials() {
   formSubmission.setAttribute("type", "text");
   questionContainerElement.appendChild(formSubmission);
   questionContainerElement.appendChild(submitButton);
-  submitButton.addEventListener("click", function(e) {
+  //Submit button handler code
+  submitButton.addEventListener("click", function (e) {
     let highScores = localStorage.getItem("highscores");
-    if(highScores === null) {
+    if (highScores === null) {
       highScores = [];
     } else {
       highScores = JSON.parse(highScores);
@@ -227,7 +229,7 @@ function inputInitials() {
       score: highscore
     });
     highScores.sort(compare).reverse();
-  
+
     localStorage.setItem("highscores", JSON.stringify(highScores));
     formSubmission.textContent = "";
     questionContainerElement.removeChild(formSubmission);
@@ -236,18 +238,12 @@ function inputInitials() {
     startButton.classList.remove('hide');
 
   })
-  
-}
 
+}
+//This is a simple compare function to be able to sort the high scores. Used in the endGame function
 function compare(a, b) {
   if (a.score > b.score) return 1;
   if (b.score > a.score) return -1;
 
   return 0;
 }
-
-//Once the game is over how can I stop the clock?
-//Once the game is over how can I trigger a field to input your name?
-//Once the game is over how can I save to local storage the name and score you put in?
-
-//
