@@ -64,7 +64,7 @@ let shuffledQuestions;
 let currentQuestionIndex;
 
 let timerTextElement = document.querySelector("#timer-text");
-let timerCount = 10;
+let timerCount = 75;
 let timer;
 timerTextElement.textContent = `Time Remaining: ${timerCount}`;
 
@@ -116,6 +116,7 @@ function quizTimer() {
           inputInitials();
       }
   }, 1000);
+
   //Created a timer object to be assigned to the variable up above so I could manipulate the timer from outside the setInterval 
   //function. This also handles the penalty when you get an answer wrong.
   let timerObject = {
@@ -206,7 +207,7 @@ function inputInitials() {
   timer.stop();
   let highscore = timerCount;
   answerButtonsElement.classList.add("hide");
-  questionElement.innerText = `The game is over! Enter your initials to add yourself to the high scores list! Your score is ${highscore}.`;
+  questionElement.innerText = `The quiz is over! Enter your initials to add yourself to the high scores list! Your score is ${highscore}.`;
   let submitButton = document.createElement("button");
   submitButton.innerText = "Submit";
   submitButton.setAttribute("class", "btn btn-primary button-effects");
@@ -214,17 +215,28 @@ function inputInitials() {
   formSubmission.setAttribute("type", "text");
   questionContainerElement.appendChild(formSubmission);
   questionContainerElement.appendChild(submitButton);
-  // submitButton.addEventListener("click", function(e) {
-  //   let initials = localStorage.getItem("initials");
-  //   if(initials === null) {
-  //     initials = [];
-  //   } else {
-  //     initials = JSON.parse("initials");
-  //   }
-    
+  submitButton.addEventListener("click", function(e) {
+    let highScores = localStorage.getItem("highscores");
+    if(highScores === null) {
+      highScores = [];
+    } else {
+      highScores = JSON.parse(highScores);
+    }
+    highScores.push({
+      initials: formSubmission.value,
+      score: highscore
+    });
+    localStorage.setItem("highscores", JSON.stringify(highScores));
+    formSubmission.textContent = "";
+    questionContainerElement.removeChild(formSubmission);
+    questionContainerElement.removeChild(submitButton);
+    questionElement.classList.add("hide");
+    startButton.classList.remove('hide');
 
-  // })
+  })
+  
 }
+
 
 //Once the game is over how can I stop the clock?
 //Once the game is over how can I trigger a field to input your name?
