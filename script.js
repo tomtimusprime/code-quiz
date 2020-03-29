@@ -226,6 +226,8 @@ function inputInitials() {
       initials: formSubmission.value,
       score: highscore
     });
+    highScores.sort(compare).reverse();
+  
     localStorage.setItem("highscores", JSON.stringify(highScores));
     formSubmission.textContent = "";
     questionContainerElement.removeChild(formSubmission);
@@ -237,6 +239,12 @@ function inputInitials() {
   
 }
 
+function compare(a, b) {
+  if (a.score > b.score) return 1;
+  if (b.score > a.score) return -1;
+
+  return 0;
+}
 
 //Once the game is over how can I stop the clock?
 //Once the game is over how can I trigger a field to input your name?
