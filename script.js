@@ -236,6 +236,7 @@ function endGame() {
     questionContainerElement.removeChild(submitButton);
     questionElement.classList.add("hide");
     startButton.classList.remove('hide');
+    startButton.innerText = "Restart";
 
   })
 
