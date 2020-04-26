@@ -1,3 +1,5 @@
+Deployed Link: https://tomtimusprime.github.io/code-quiz/
+
 This is a simple Javascript Quiz. You have 75 seconds to complete the quiz and however many seconds you have left will be translated into your final score. Click the "start" button to kick off the quiz. A series of questions with associated answer buttons will be generated. If you get a question wrong, 5 seconds will be taken off the clock and be reduced from your overall final score. Once the quiz is over, enter your initials and your final score will be associated with your initials. You can then view all of the high scores on the high scores page. 
 
 
